@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@NamedQueries(value =  {
+        @NamedQuery(name = "get_all_orders", query = "Select u FROM UserOrder u")
+})
 public class UserOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

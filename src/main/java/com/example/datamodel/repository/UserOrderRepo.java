@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -55,8 +56,10 @@ public class UserOrderRepo {
         return "here is total cart";
     }
 
-//    public List getAllOrder() {
-//
-//    }
+    public List<UserOrder> getAllOrders() {
+        TypedQuery<UserOrder> query = em.createNamedQuery("get_all_orders",UserOrder.class);
+        List<UserOrder> result =  query.getResultList();
+        return result;
+    }
 
 }

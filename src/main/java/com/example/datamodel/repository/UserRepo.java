@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -47,6 +48,34 @@ public class UserRepo {
         } else {
             return null;
         }
+    }
+
+    public User addNewUser(User user) {
+        em.persist(user);
+        return user;
+    }
+
+    public List<User> getUsers() {
+        TypedQuery<User> query = em.createNamedQuery("get_all_users",User.class);
+        List<User> result =  query.getResultList();
+        return result;
+    }
+
+    public User verifyUser(String email, String password) {
+        User user = null;
+        List<User> users = getUsers();
+        for(int i = 0; i<users.size();i++) {
+           user = users.get(i);
+            if(user.getEmail().equals(email)) {
+                if( user.getPassword().equals(password) ) {
+
+                    break;
+                }
+
+            }
+        }
+        log.info("user -> {}",user);
+        return user;
     }
 
 

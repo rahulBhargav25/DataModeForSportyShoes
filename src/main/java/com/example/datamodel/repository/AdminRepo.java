@@ -2,6 +2,7 @@ package com.example.datamodel.repository;
 
 
 import com.example.datamodel.entity.Admin;
+import com.example.datamodel.entity.UserOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -66,9 +68,16 @@ public class AdminRepo {
         }
     }
 
-//    public List filterByDateAndCategory() {
-//       userOrderRepo.
-//    }
+    public void filterByDateAndCategory() {
+        List<UserOrder> orders = userOrderRepo.getAllOrders();
+        List<List> ordersWithProducts = new ArrayList<>();
+        for(Long i = 0L; i < orders.size(); i++) {
+            UserOrder userOrder = em.find(UserOrder.class,i);
+            ordersWithProducts.add(userOrder.getProducts());
+        }
+
+    }
+
 
 
 }
