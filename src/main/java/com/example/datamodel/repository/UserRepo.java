@@ -18,6 +18,7 @@ public class UserRepo {
     @Autowired
     EntityManager em;
 
+
     private UserRepo userRepo;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -33,21 +34,21 @@ public class UserRepo {
 
     }
 
-    public String userUpdate(Long userId, String oldPassword, String newPassword) {
-        User user = userRepo.findUserById(userId);
+    public User userUpdate(Long userId, String oldPassword, String newPassword) {
+        User user =  em.find(User.class, userId);
+
         if (user.getPassword() == oldPassword) {
             user.setPassword(newPassword);
             if (user.getPassword() == newPassword) {
-                return "Your password has been updated";
+                return user;
             } else {
-                return "An error occured, password could not be updated";
+                return null;
             }
         } else {
-            return "Kindly login with correct details";
+            return null;
         }
     }
-//
-//    public User verifyUser(String userName,) {
-//
-//    }
+
+
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -19,6 +20,12 @@ public class AdminRepo {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    private UserOrderRepo userOrderRepo;
+
+    @Autowired
+    private ProductRepo productRepo;
+
 
     /*
     * Add a new admin if not exists already
@@ -26,7 +33,7 @@ public class AdminRepo {
     * if exist used merge to update the admin data
     * */
     public Admin saveAdmin(Admin admin) {
-        if(admin.getAdminId() == null) {
+        if(admin.getId() == null) {
             em.persist(admin);
         } else {
             em.merge(admin);
@@ -58,5 +65,10 @@ public class AdminRepo {
             return "Password mismatch";
         }
     }
+
+//    public List filterByDateAndCategory() {
+//       userOrderRepo.
+//    }
+
 
 }

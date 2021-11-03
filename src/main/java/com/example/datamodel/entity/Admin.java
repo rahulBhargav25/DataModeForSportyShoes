@@ -1,8 +1,7 @@
 package com.example.datamodel.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 /*
 * STORES ADMIN DETAILS TO DATABASE
 * */
@@ -11,8 +10,9 @@ public class Admin {
 
 
     @Id
-    @GeneratedValue
-    private Long adminId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
     private String password;
 
@@ -33,12 +33,12 @@ public class Admin {
     }
     /*
     * getter & setter for fetching and updating the data*/
-    public Long getAdminId() {
-        return adminId;
+    public Long getId() {
+        return id;
     }
 
-    public void setAdminId(Long adminId) {
-        this.adminId = adminId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPassword() {
@@ -68,7 +68,7 @@ public class Admin {
     @Override
     public String toString() {
         return "Admin{" +
-                "adminId=" + adminId +
+                "id=" + id +
                 ", password='" + password + '\'' +
                 ", adminName='" + adminName + '\'' +
                 ", email='" + email + '\'' +

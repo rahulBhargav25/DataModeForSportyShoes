@@ -7,13 +7,14 @@ import javax.persistence.*;
         value = {
                 @NamedQuery(name="get_all_users", query = "select u from User u")
 
+
         }
 )
 public class User {
-
     @Id
-    @GeneratedValue
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
     private String userName;
 
@@ -33,12 +34,12 @@ public class User {
         this.password = password;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -76,7 +77,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
