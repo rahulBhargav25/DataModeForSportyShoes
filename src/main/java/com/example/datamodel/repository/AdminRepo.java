@@ -2,6 +2,7 @@ package com.example.datamodel.repository;
 
 
 import com.example.datamodel.entity.Admin;
+import com.example.datamodel.entity.User;
 import com.example.datamodel.entity.UserOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,9 @@ public class AdminRepo {
 
     @Autowired
     private ProductRepo productRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
 
     /*
@@ -78,6 +83,43 @@ public class AdminRepo {
 
     }
 
+    public List<Admin> getAdmins() {
+        TypedQuery<Admin> query = em.createNamedQuery("get_all_admins",Admin.class);
+        List<Admin> result =  query.getResultList();
+        return result;
+    }
 
+    public Admin verifyAdmin(String email, String password) {
+        Admin admin = null;
+        List<Admin> admins = getAdmins();
+        for(int i = 0; i<admins.size();i++) {
+            admin = admins.get(i);
+            if(admin.getEmail().equals(email)) {
+                if( admin.getPassword().equals(password) ) {
+                    break;
+                }
+            }
+        }
+        log.info("admin -> {}",admin);
+        return admin;
+    }
 
+    public Admin changePasswordByEmail(String email, String oldPassword, String newPassword) {
+        Admin admin = verifyAdmin(email,oldPassword);
+        if(admin == null) {
+            return null;
+        } else {
+            Long id = admin.getId();
+            changePassword(id,oldPassword,newPassword);
+            return admin;
+        }
+    }
+    public List<User> getAllUsersForAdmin() {
+        List<User> users = userRepo.getUsers();
+        return users;
+    }
+    public List<User> searchUser(String name) {
+        List users = userRepo.searchUserByName(name);
+        return users;
+    }
 }

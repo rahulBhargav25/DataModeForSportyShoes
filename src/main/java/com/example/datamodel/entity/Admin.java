@@ -6,6 +6,7 @@ import javax.persistence.*;
 * STORES ADMIN DETAILS TO DATABASE
 * */
 @Entity
+@NamedQuery(name = "get_all_admins", query = "select a from Admin a")
 public class Admin {
 
 

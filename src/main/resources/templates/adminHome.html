@@ -5,6 +5,43 @@
     <title>Title</title>
 </head>
 <body>
+    <a href="change">Change admin password</a>
+    <a href="getUsers">Get All the users</a>
+
+    <form action="searchUser">
+        <input type="text" name="name" placeholder="Enter name of user">
+        <input type="submit" value="click">
+    </form>
+
+
+
+
+    <div class="container">
+
+
+        <div th:if="${not #lists.isEmpty(users)}">
+            <h2>user list</h2>
+
+            <table class="table table-stripped">
+                <tr>
+                    <th>User_Id</th>
+                    <th>User_Email</th>
+                    <th>Name</th>
+                    <th>Password</th>
+                    <th>User_Name</th>
+                </tr>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.password}"></td>
+                    <td th:text="${user.userName}"></td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
 
 </body>
 </html>

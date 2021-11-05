@@ -8,6 +8,7 @@ import javax.persistence.*;
                 @NamedQuery(name="get_all_users", query = "select u from User u")
 
 
+
         }
 )
 public class User {

@@ -8,9 +8,11 @@ import org.springframework.stereotype.Repository;
 
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Queue;
 
 @Repository
 @Transactional
@@ -76,6 +78,13 @@ public class UserRepo {
         }
         log.info("user -> {}",user);
         return user;
+    }
+
+    public List<User> searchUserByName(String name) {
+        Query query = em.createNativeQuery("Select * from user where name = :name",User.class);
+        query.setParameter("name",name);
+        List result = query.getResultList();
+        return result;
     }
 
 
