@@ -24,6 +24,12 @@ public class ProductRepo {
     EntityManager em;
 
 
+    @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
+    private UserOrderRepo userOrderRepo;
+
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -60,13 +66,20 @@ public class ProductRepo {
         return product;
     }
 
-    public String addProductToOrder(Long orderId, Long productId) {
+    public UserOrder addProductToOrder(Long orderId, Long productId) {
         UserOrder userOrder = em.find(UserOrder.class,orderId);
         Product product = em.find(Product.class,productId);
         userOrder.addProducts(product);
         product.addUserOrders(userOrder);
         em.persist(userOrder);
-        return "product added to orders successfully";
+        return userOrder;
 
+    }
+
+    public UserOrder addProductToUserOrder(Long ProductId, Long userId) {
+        UserOrder userOrder = userOrderRepo.createNewOrder(userId);
+        Long orderId = userOrder.getId();
+        UserOrder userOrder1 = addProductToOrder(orderId,ProductId);
+        return userOrder1;
     }
 }

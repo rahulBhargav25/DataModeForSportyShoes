@@ -5,6 +5,40 @@
     <title>User Home</title>
 </head>
 <body>
-    You are at home page now
+<a href="add">Get All the Products</a>
+<span th:text="${price}"></span>
+
+<div class="container">
+
+
+    <div th:if="${not #lists.isEmpty(products)}">
+        <h2>Product List</h2>
+
+        <table class="table table-stripped">
+            <tr>
+                <th>Product_Id</th>
+                <th>Product_Name</th>
+                <th>Category</th>
+                <th>Cost</th>
+
+            </tr>
+            <tr th:each="product : ${products}">
+                <form action="#" th:action="@{/addProducts}" th:object="${product}" method="post">
+                <td th:text="${product.id}"></td>
+                <td th:text="${product.productName}"></td>
+                <td th:text="${product.category}"></td>
+                <td th:text="${product.cost}"></td>
+                <td>
+                    <input type="hidden" th:value="${product.id}" name="id"/>
+                    <button type="submit" class="removebutton" name="action" value="click">click</button></td>
+
+                </form>
+
+            </tr>
+        </table>
+
+
+    </div>
+</div>
 </body>
 </html>

@@ -63,4 +63,9 @@ public class UserRepoTest {
         log.info("specified user -> {}", result);
     }
 
+    @Test
+    @Transactional
+    public void logintest() {
+        userRepo.verifyUser("r@gmail,com","1");
+    }
 }

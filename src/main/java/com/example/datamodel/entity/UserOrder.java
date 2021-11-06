@@ -17,13 +17,23 @@ public class UserOrder {
 
     private Long total;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    private User user;
 
     private Date date;
 
     @ManyToMany
     @JoinTable(name="order_product",
-            joinColumns = @JoinColumn(name="product_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id")
+            joinColumns = @JoinColumn(name="order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
         )
     private List<Product> products = new ArrayList<>();
 
@@ -32,6 +42,15 @@ public class UserOrder {
 
     public UserOrder(Long total, Date date) {
         this.total = total;
+        this.date = date;
+    }
+
+    public UserOrder(Date date) {
+        this.date = date;
+        this.id= user.getId();
+    }
+
+    public UserOrder(Date date,Long id) {
         this.date = date;
     }
 

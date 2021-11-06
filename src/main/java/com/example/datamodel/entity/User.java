@@ -1,5 +1,7 @@
 package com.example.datamodel.entity;
 
+import org.springframework.web.context.annotation.SessionScope;
+
 import javax.persistence.*;
 
 @Entity
@@ -24,6 +26,18 @@ public class User {
     private String name;
 
     private String password;
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    private UserOrder userOrder;
+
+    public UserOrder getUserOrder() {
+        return userOrder;
+    }
+
+
+    public void setUserOrder(UserOrder userOrder) {
+        this.userOrder = userOrder;
+    }
 
     public User() {
     }

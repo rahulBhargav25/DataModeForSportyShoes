@@ -1,6 +1,7 @@
 package com.example.datamodel.repository;
 
 import com.example.datamodel.entity.User;
+import com.example.datamodel.entity.UserOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,6 @@ public class UserRepo {
     @Autowired
     EntityManager em;
 
-
-    private UserRepo userRepo;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -65,19 +64,21 @@ public class UserRepo {
 
     public User verifyUser(String email, String password) {
         User user = null;
-        List<User> users = getUsers();
-        for(int i = 0; i<users.size();i++) {
-           user = users.get(i);
-            if(user.getEmail().equals(email)) {
-                if( user.getPassword().equals(password) ) {
 
+        List<User> users = getUsers();
+        User newuser = null;
+        for (int i = 0; i < users.size(); i++) {
+            user = users.get(i);
+            if (user.getEmail().equals(email)) {
+                if (user.getPassword().equals(password)) {
+                    newuser = user;
                     break;
                 }
 
             }
         }
-        log.info("user -> {}",user);
-        return user;
+        log.info("user -> {}", user);
+        return newuser;
     }
 
     public List<User> searchUserByName(String name) {
@@ -86,6 +87,21 @@ public class UserRepo {
         List result = query.getResultList();
         return result;
     }
+
+    public void addUserOrderToUser(Long id, UserOrder userOrder) {
+        User user = em.find(User.class,id);
+        user.setUserOrder(userOrder);
+        em.merge(user);
+
+    }
+
+    public UserOrder verifyUserToOrder(Long userId) {
+        User user = em.find(User.class,userId);
+            return user.getUserOrder();
+
+    }
+
+
 
 
 

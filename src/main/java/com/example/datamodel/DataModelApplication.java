@@ -1,14 +1,18 @@
 package com.example.datamodel;
 
+import com.example.datamodel.entity.UserOrder;
 import com.example.datamodel.repository.AdminRepo;
 import com.example.datamodel.repository.ProductRepo;
 import com.example.datamodel.repository.UserOrderRepo;
+import com.example.datamodel.repository.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Date;
 
 @SpringBootApplication
 public class DataModelApplication implements CommandLineRunner {
@@ -22,6 +26,9 @@ public class DataModelApplication implements CommandLineRunner {
    @Autowired
     private AdminRepo adminRepo;
 
+   @Autowired
+   private UserRepo userRepo;
+
     private Logger logger  = LoggerFactory.getLogger(this.getClass());
 
 
@@ -34,7 +41,7 @@ public class DataModelApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//
+
 //            logger.info("list result -> {}",adminRepo.filterByDateAndCategory());
 //           logger.info("gotcha -> {}", userOrderRepo.insert());
     }

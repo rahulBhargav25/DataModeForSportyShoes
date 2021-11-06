@@ -7,6 +7,7 @@
 <body>
     <a href="change">Change admin password</a>
     <a href="getUsers">Get All the users</a>
+    <a href="getProducts">Get All the Products</a>
 
     <form action="searchUser">
         <input type="text" name="name" placeholder="Enter name of user">
@@ -41,6 +42,64 @@
 
 
         </div>
+    </div>
+
+    <div class="container">
+
+
+        <div th:if="${not #lists.isEmpty(products)}">
+            <h2>Product List</h2>
+
+            <table class="table table-stripped">
+                <tr>
+                    <th>Product_Id</th>
+                    <th>Product_Name</th>
+                    <th>Category</th>
+                    <th>Cost</th>
+
+                </tr>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.productName}"></td>
+                    <td th:text="${product.category}"></td>
+                    <td th:text="${product.cost}"></td>
+
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Add product</h2>
+        <form action="addProduct" method="post">
+            <input type="text" name="productName" placeholder="product name">
+            <input type="text" name="category" placeholder="category">
+            <input type="number" name="cost" placeholder="cost">
+            <input type="submit" value="click">
+        </form>
+    </div>
+
+    <div class="container">
+        <h2>Delete Product</h2>
+        <h6>Enter product id from list</h6>
+        <form action="delProduct" method="post">
+            <input type="number" name="id" placeholder="Enter Product Id">
+            <input type="submit" value="click">
+        </form>
+    </div>
+
+    <div class="container">
+        <h2>Update product</h2>
+        <form action="updateProduct" method="post">
+            <h2>Update Product</h2>
+            <input type="number" name="id" placeholder="ENter Product ID to be updated">
+            <input type="text" name="productName" placeholder="product name">
+            <input type="text" name="category" placeholder="category">
+            <input type="number" name="cost" placeholder="cost">
+            <input type="submit" value="click">
+        </form>
     </div>
 
 </body>
