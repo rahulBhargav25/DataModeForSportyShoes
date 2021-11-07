@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -17,7 +18,6 @@ import java.util.List;
 @Repository
 @Transactional
 public class ProductRepo {
-
 
 
     @Autowired
@@ -34,13 +34,13 @@ public class ProductRepo {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     public Product searchProduct(Long id) {
-        Product product = em.find(Product.class,id);
+        Product product = em.find(Product.class, id);
         return product;
     }
 
     public List<Product> getAllProducts() {
-        TypedQuery<Product> query = em.createNamedQuery("get_all_products",Product.class);
-        List<Product> result =  query.getResultList();
+        TypedQuery<Product> query = em.createNamedQuery("get_all_products", Product.class);
+        List<Product> result = query.getResultList();
         return result;
     }
 
@@ -57,7 +57,7 @@ public class ProductRepo {
 
     public Product updateProduct(Long id, Product product) {
         Product p1 = searchProduct(id);
-        if(p1.getId()==null) {
+        if (p1.getId() == null) {
             em.persist(product);
         } else {
             em.merge(product);
@@ -67,8 +67,8 @@ public class ProductRepo {
     }
 
     public UserOrder addProductToOrder(Long orderId, Long productId) {
-        UserOrder userOrder = em.find(UserOrder.class,orderId);
-        Product product = em.find(Product.class,productId);
+        UserOrder userOrder = em.find(UserOrder.class, orderId);
+        Product product = em.find(Product.class, productId);
         userOrder.addProducts(product);
         product.addUserOrders(userOrder);
         em.persist(userOrder);
@@ -79,7 +79,14 @@ public class ProductRepo {
     public UserOrder addProductToUserOrder(Long ProductId, Long userId) {
         UserOrder userOrder = userOrderRepo.createNewOrder(userId);
         Long orderId = userOrder.getId();
-        UserOrder userOrder1 = addProductToOrder(orderId,ProductId);
+        UserOrder userOrder1 = addProductToOrder(orderId, ProductId);
         return userOrder1;
+    }
+
+
+    public List<Object[]> testPurchaseRepoQuery() {
+        Query q = em.createQuery("select uo,p from UserOrder uo JOIN uo.products p order by p.category desc ");
+        List<Object[]> resultList = q.getResultList();
+        return resultList;
     }
 }

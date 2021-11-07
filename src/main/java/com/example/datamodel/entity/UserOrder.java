@@ -30,11 +30,7 @@ public class UserOrder {
 
     private Date date;
 
-    @ManyToMany
-    @JoinTable(name="order_product",
-            joinColumns = @JoinColumn(name="order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-        )
+    @ManyToMany(mappedBy = "userOrders",fetch = FetchType.EAGER)
     private List<Product> products = new ArrayList<>();
 
     public UserOrder() {

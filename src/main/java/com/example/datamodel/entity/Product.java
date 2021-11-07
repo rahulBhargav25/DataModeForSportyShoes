@@ -15,17 +15,23 @@ public class Product {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
+    private String category;
+
     private String productName;
 
 
 
-    private String category;
+
 
     private Long cost;
 
 
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="order_product",
+            joinColumns = @JoinColumn(name="product_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id")
+    )
     private List<UserOrder> userOrders = new ArrayList<>();
 
     public Product() {

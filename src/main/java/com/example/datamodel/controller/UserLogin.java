@@ -22,7 +22,7 @@ public class UserLogin {
     @Autowired
     HttpSession session;
 
-    @RequestMapping("login")
+    @RequestMapping("/")
     public String loginPage() {
         return "userLogin";
     }

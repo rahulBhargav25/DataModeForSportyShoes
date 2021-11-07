@@ -1,8 +1,9 @@
 package com.example.datamodel.controller;
 
-import com.example.datamodel.entity.Admin;
-import com.example.datamodel.entity.User;
+import com.example.datamodel.entity.*;
 import com.example.datamodel.repository.AdminRepo;
+import com.example.datamodel.repository.ProductRepo;
+import com.example.datamodel.repository.PurchaseHistoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +21,12 @@ public class AdminHome {
 
     @Autowired
     private AdminRepo adminRepo;
+
+    @Autowired
+    private ProductRepo productRepo;
+
+    @Autowired
+    private PurchaseHistoryRepo purchaseHistoryRepo;
 
     @RequestMapping("/change")
     public String change() {
@@ -49,6 +58,13 @@ public class AdminHome {
         String name = maps.get("name");
         List<User> users = adminRepo.searchUser(name);
         model.addAttribute("users",users);
+        return "adminHome";
+    }
+
+    @RequestMapping("/purchaseHistory")
+    public String purchaseReports(Model model) {
+        List<PurchaseHistory> purchaseHistories = purchaseHistoryRepo.getPurchaseHistory();
+        model.addAttribute("purchaseHistory",purchaseHistories);
         return "adminHome";
     }
 
